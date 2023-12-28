@@ -1,18 +1,8 @@
 #include "include/functions.h"
 #include <algorithm>
 #include <string>
-
-/*
-We shall say that an n-digit number is pandigital if it makes use of all the digits 1 to n exactly once;
-for example, the 5-digit number, 15234, is 1 through 5 pandigital.
-
-The product 7254 is unusual, as the identity, 39 × 186 = 7254, containing multiplicand, multiplier,
-and product is 1 through 9 pandigital.
-
-Find the sum of all products whose multiplicand/multiplier/product identity can be written as a 1 through 9 pandigital.
-
-HINT: Some products can be obtained in more than one way so be sure to only include it once in your sum.
-*/
+#include <vector>
+#include <numeric>
 
 namespace func {
     bool is_identity_1_to_n_pandigital(int multiplicand, int multiplier, int n) {
@@ -59,5 +49,32 @@ namespace func {
         }
 
         return is_1_to_n_pandigital;
+    }
+
+    int64_t product_sum(int n) {
+        std::vector<int64_t> valid_products;
+        
+        //1 <= x <= 9 and 1000 <= y <= 9999.
+        for (int64_t x = 1; x <= 9; x++) {
+            for (int64_t y = 1000; y <= 9999; y++) {
+                //Checking if identity is pandigital and whether the resulting product has been encountered before.
+                if (is_identity_1_to_n_pandigital(x, y, n) && !(std::find(valid_products.begin(), valid_products.end(), (x * y)) != valid_products.end())) {
+                    valid_products.push_back(x * y);
+                }
+            }
+        }
+
+        //10 <= x <= 99 and 100 <= y <= 999.
+        for (int64_t x = 10; x <= 99; x++) {
+            for (int64_t y = 100; y <= 999; y++) {
+                //Checking if identity is pandigital and whether the resulting product has been encountered before.
+                if (is_identity_1_to_n_pandigital(x, y, n) && !(std::find(valid_products.begin(), valid_products.end(), (x * y)) != valid_products.end())) {
+                    valid_products.push_back(x * y);
+                }
+            }
+        }
+
+        //Calculating the sum of all valid products.
+        return std::accumulate(valid_products.begin(), valid_products.end(), 0);
     }
 }

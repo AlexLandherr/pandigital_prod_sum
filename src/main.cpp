@@ -14,7 +14,10 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
 */
 
 int main() {
-    std::cout << std::boolalpha << func::is_identity_1_to_n_pandigital(39, 186, 9) << '\n';
+    //std::cout << std::boolalpha << func::is_identity_1_to_n_pandigital(39, 186, 9) << '\n';
+    int n = 9;
+    std::cout << "The sum of all products whose multiplicand/multiplier/product identity can be written as a 1 through 9 pandigital is:" << '\n';
+    std::cout << func::product_sum(n) << '\n';
 
     return 0;
 }
